@@ -1,13 +1,10 @@
 import React from 'react';
+import Page from './components/Page/Page';
 
 import './App.scss';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">Search Images app</header>
-    </div>
-  );
+  return <Page />;
 }
 
 export default App;
