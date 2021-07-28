@@ -1,7 +1,12 @@
-.menu-border {
+.menu-block {
   border: 1px solid #000;
   border-left: 0px;
+  height: 600px;
 }
 .linck-icon {
   font-size: 2.5rem;
+  transition: 1s;
+}
+.linck-icon:hover {
+  transform: scale(1.2);
 }

@@ -8,11 +8,11 @@ function Seacrh() {
 
   return (
     <Container className="search-block w-100 p-3 text-dark d-flex justify-content-between ">
-      <Form inline className="d-flex w-100 justify-content-end ms-3">
+      <Form inline className="d-flex w-100 justify-content-end ">
         <FormControl
           type="search"
           placeholder="Find images"
-          className="mr-sm-2 w-50"
+          className=""
           autoFocus
           // value={inputText}
           // onChange={changeHandle}
