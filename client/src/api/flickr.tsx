@@ -1,21 +1,19 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-export const apiKey = 'e538ac8584601a9e9bcd4c35b2315eaa';
-// export const apiFlickr = (apiKey: string, textValue: string, page: string) =>
-//   `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${textValue}&per_page=10&page=${page}&format=json&nojsoncallback=1`;
+const apiKey = 'e538ac8584601a9e9bcd4c35b2315eaa';
 
-// const Api = {
-//   getImages(textValue: string, page: string) {
-//     return axios
-//       .get(
-//         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${textValue}&per_page=10&page=${page}&format=json&nojsoncallback=1`
-//       )
-//       .then((response) => response.data.photos)
-//       .catch((error) => {
-//         console.log('Error fetching posts: ', error);
-//       });
-//   },
-// };
+const Api = {
+  getImages(textValue: string, page: string) {
+    return axios
+      .get(
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${textValue}&per_page=10&page=${page}&format=json&nojsoncallback=1`
+      )
+      .then((response) => response.data.photos)
+      .catch((error) => {
+        console.log('Error fetching posts: ', error);
+      });
+  },
+};
 
 // async function Api(textValue: string, page: string) {
 //   const response = await axios.get(
@@ -24,4 +22,4 @@ export const apiKey = 'e538ac8584601a9e9bcd4c35b2315eaa';
 //   return response.data;
 // }
 
-// export default Api;
+export default Api;
