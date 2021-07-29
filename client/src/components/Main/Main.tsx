@@ -36,7 +36,10 @@ function Main() {
           </Card.Text> */}
 
             <Form inline className="w-100 ">
-              <Button variant="dark" onClick={() => Store.getCounter()}>
+              <Button
+                variant="dark"
+                // onClick={() => Store.getCounter()}
+              >
                 Bookmark it!
               </Button>
               <FormControl
