@@ -16,6 +16,10 @@ export function autoSave(_this: any, name: string) {
 class Store {
   search: string = '';
 
+  page: string = '1';
+
+  pageWithImages: object = {};
+
   public accessToken: string;
 
   constructor() {
@@ -26,7 +30,12 @@ class Store {
 
   getSearchQuery(enteredSearch: string) {
     this.search = enteredSearch;
-    console.log(this.search);
+    // console.log(this.search);
+  }
+
+  getImages(images: object) {
+    this.pageWithImages = images;
+    // console.log(this.pageWithImages);
   }
 }
 

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Main.scss';
 import { Container, Button, Card, Form, FormControl } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import Store from '../../store/Store';
+// import Store from '../../store/Store';
+// import Api from '../../api/flickr';
 
 function Main() {
   return (
@@ -25,7 +26,7 @@ function Main() {
         <Card style={{ width: '18rem' }}>
           <Card.Img
             variant="top"
-            src="holder.js/100px180"
+            src="https://www.imgonline.com.ua/examples/bee-on-daisy.jpg"
             className="card-img"
           />
           <Card.Body>
