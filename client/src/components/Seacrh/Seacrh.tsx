@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, FormControl, Button } from 'react-bootstrap';
 
 import Store from '../../store/Store';
-import Api from '../../api/flickr';
 
 interface ISearch {
   onSearch(text: string): void;
@@ -27,9 +26,7 @@ const Seacrh: React.FC<ISearch> = (props) => {
   };
 
   useEffect(() => {
-    if (inputText.length != 0) {
-      props.onSearch(startSearch);
-    }
+    props.onSearch(startSearch);
   }, [startSearch]);
 
   return (

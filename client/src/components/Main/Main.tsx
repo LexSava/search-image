@@ -3,7 +3,19 @@ import './Main.scss';
 import { Container, Button, Card, Form, FormControl } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import Store from '../../store/Store';
-import Api from '../../api/flickr';
+import { Api } from '../../api/flickr';
+
+interface IBodyImg {
+  farm: number;
+  id: string;
+  isfamily: number;
+  isfriend: number;
+  ispublic: number;
+  owner: string;
+  secret: string;
+  server: string;
+  title: string;
+}
 
 interface IMain {
   resultsSearch: string;
@@ -13,6 +25,10 @@ const Main: React.FC<IMain> = (props) => {
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<string>('1');
   const [allPages, setAllPages] = useState<string>('1');
+  // eslint-disable-next-line
+  const [idAllImagesPage, setIdAllImagesPage] = useState<any>([]);
+  // eslint-disable-next-line
+  const [cards, setCards] = useState<any>([]);
 
   useEffect(() => {
     setSearch(props.resultsSearch);
@@ -20,19 +36,56 @@ const Main: React.FC<IMain> = (props) => {
 
   useEffect(() => {
     if (search.length != 0) {
-      const images = Api.getImages(search, page);
+      const getOnePageImages = Api.getImages(search, page);
+      // console.log(getOnePageImages);
 
-      Store.getImages(images.then((response) => response.data));
-      console.log(
-        images.then((response) => {
-          setAllPages(response.pages);
-          console.log(response.pages);
-          console.log(response);
-          return response.data;
-        })
-      );
+      // Store.getImages(getOnePageImages.then((response) => response.data));
+
+      getOnePageImages.then((response) => {
+        setAllPages(response.pages);
+
+        setIdAllImagesPage(response.photo.map((item: IBodyImg) => item));
+      });
     }
   }, [search, page]);
+
+  useEffect(() => {
+    setCards(
+      idAllImagesPage.map((img: IBodyImg) => {
+        console.log(img);
+
+        const srcPath = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`;
+        return (
+          <Card style={{ width: '18rem' }} key={img.id} className="mb-4">
+            <Card.Img variant="top" src={srcPath} className="card-img img" />
+            <Card.Body>
+              <Form inline className="w-100 ">
+                <Button
+                  variant="dark"
+                  // onClick={() => Store.getCounter()}
+                >
+                  Bookmark it!
+                </Button>
+                <FormControl
+                  type="text"
+                  placeholder="Some tags?"
+                  className="mt-3"
+                  // value={inputText}
+                  // onChange={changeHandle}
+                  // onInput={changeHandle}
+                  // onKeyPress={keyPressHandler}
+                />
+              </Form>
+            </Card.Body>
+          </Card>
+        );
+      })
+    );
+  }, [idAllImagesPage]);
+
+  // useEffect(() => {
+  //   console.log(cards);
+  // }, [cards]);
 
   const backPage = () => {
     let back = +page;
@@ -50,66 +103,47 @@ const Main: React.FC<IMain> = (props) => {
     }
   };
 
+  if (search.length != 0 && idAllImagesPage.length != 0) {
+    return (
+      <Container className="p-0 ps-3">
+        <Container className="p-0 d-flex justify-content-end pe-3">
+          <Button
+            variant="outline-dark"
+            className="btn-back"
+            onClick={() => backPage()}
+          >
+            <BsChevronLeft className="btn-back-icon" />
+            Back
+          </Button>
+          <Button variant="dark" disabled className="btn-pages">
+            Page {page} of {allPages}
+          </Button>
+          <Button
+            variant="outline-dark"
+            className="btn-forward"
+            onClick={() => forwardPage()}
+          >
+            Forward
+            <BsChevronRight className="btn-forward-icon" />
+          </Button>
+        </Container>
+
+        <Container className="p-0 mt-5 d-flex flex-wrap justify-content-around">
+          {cards}
+        </Container>
+      </Container>
+    );
+  }
+  if (search.length === 0) {
+    return (
+      <Container className="p-0 ps-3 h5">
+        No images here. Try to find anything else?
+      </Container>
+    );
+  }
   return (
-    <Container className="p-0 ps-3">
-      <Container className="p-0 d-flex justify-content-end pe-3">
-        <Button
-          variant="outline-dark"
-          className="btn-back"
-          onClick={() => backPage()}
-        >
-          <BsChevronLeft className="btn-back-icon" />
-          Back
-        </Button>
-        <Button variant="dark" disabled className="btn-pages">
-          Page {page} of {allPages}
-        </Button>
-        <Button
-          variant="outline-dark"
-          className="btn-forward"
-          onClick={() => forwardPage()}
-        >
-          Forward
-          <BsChevronRight className="btn-forward-icon" />
-        </Button>
-      </Container>
-
-      <Container className="p-0 mt-5">
-        <Card style={{ width: '18rem' }}>
-          <Card.Img
-            variant="top"
-            src="https://www.imgonline.com.ua/examples/bee-on-daisy.jpg"
-            className="card-img"
-          />
-          <Card.Body>
-            {/* <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text> */}
-
-            <Form inline className="w-100 ">
-              <Button
-                variant="dark"
-                // onClick={() => Store.getCounter()}
-              >
-                Bookmark it!
-              </Button>
-              <FormControl
-                type="text"
-                placeholder="Some tags?"
-                className="mt-3"
-                // value={inputText}
-                // onChange={changeHandle}
-                // onInput={changeHandle}
-                // onKeyPress={keyPressHandler}
-              />
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container>
-
-      {/* No images here. Whould you try to search for anything else? */}
+    <Container className="p-0 ps-3 h5">
+      No images here. Whould you try to search for anything else?
     </Container>
   );
 };
