@@ -14,24 +14,5 @@ export const Api = {
       });
   },
 };
-export const ApiImg = {
-  getImage(idImg: string) {
-    return axios
-      .get(
-        `https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${apiKey}&photo_id=${idImg}&format=json&nojsoncallback=1`
-      )
-      .then((response) => response.data)
-      .catch((error) => {
-        console.log('Error fetching posts: ', error);
-      });
-  },
-};
-
-// async function Api(textValue: string, page: string) {
-//   const response = await axios.get(
-//     `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${textValue}&per_page=10&page=${page}&format=json&nojsoncallback=1`
-//   );
-//   return response.data;
-// }
 
 export default Api;
