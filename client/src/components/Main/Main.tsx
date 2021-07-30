@@ -2,21 +2,73 @@ import React, { useState, useEffect } from 'react';
 import './Main.scss';
 import { Container, Button, Card, Form, FormControl } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-// import Store from '../../store/Store';
-// import Api from '../../api/flickr';
+import Store from '../../store/Store';
+import Api from '../../api/flickr';
 
-function Main() {
+interface IMain {
+  resultsSearch: string;
+}
+
+const Main: React.FC<IMain> = (props) => {
+  const [search, setSearch] = useState<string>('');
+  const [page, setPage] = useState<string>('1');
+  const [allPages, setAllPages] = useState<string>('1');
+
+  useEffect(() => {
+    setSearch(props.resultsSearch);
+  }, [props.resultsSearch]);
+
+  useEffect(() => {
+    if (search.length != 0) {
+      const images = Api.getImages(search, page);
+
+      Store.getImages(images.then((response) => response.data));
+      console.log(
+        images.then((response) => {
+          setAllPages(response.pages);
+          console.log(response.pages);
+          console.log(response);
+          return response.data;
+        })
+      );
+    }
+  }, [search, page]);
+
+  const backPage = () => {
+    let back = +page;
+    if (back > 1) {
+      back -= 1;
+      setPage(String(back));
+    }
+  };
+
+  const forwardPage = () => {
+    let forward = +page;
+    if (forward < +allPages) {
+      forward += 1;
+      setPage(String(forward));
+    }
+  };
+
   return (
     <Container className="p-0 ps-3">
       <Container className="p-0 d-flex justify-content-end pe-3">
-        <Button variant="outline-dark" className="btn-back">
+        <Button
+          variant="outline-dark"
+          className="btn-back"
+          onClick={() => backPage()}
+        >
           <BsChevronLeft className="btn-back-icon" />
           Back
         </Button>
         <Button variant="dark" disabled className="btn-pages">
-          Page 1 of 10
+          Page {page} of {allPages}
         </Button>
-        <Button variant="outline-dark" className="btn-forward">
+        <Button
+          variant="outline-dark"
+          className="btn-forward"
+          onClick={() => forwardPage()}
+        >
           Forward
           <BsChevronRight className="btn-forward-icon" />
         </Button>
@@ -60,6 +112,6 @@ function Main() {
       {/* No images here. Whould you try to search for anything else? */}
     </Container>
   );
-}
+};
 
 export default Main;
