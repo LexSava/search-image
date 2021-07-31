@@ -1,4 +1,5 @@
 import { makeAutoObservable, autorun, set, toJS } from 'mobx';
+import _ from 'lodash';
 
 // eslint-disable-next-line
 export function autoSave(_this: any, name: string) {
@@ -10,15 +11,16 @@ export function autoSave(_this: any, name: string) {
     const value = toJS(_this);
     localStorage.setItem(name, JSON.stringify(value));
   });
-  // window.localStorage.clear();
 }
-
+// window.localStorage.clear();
 class Store {
   search: string = '';
 
-  page: string = '1';
+  // page: string = '1';
 
-  pageWithImages: object = {};
+  // pageWithImages: object = {};
+  // eslint-disable-next-line
+  savedImages: any = [];
 
   public accessToken: string;
 
@@ -33,9 +35,10 @@ class Store {
     // console.log(this.search);
   }
 
-  getImages(images: object) {
-    this.pageWithImages = images;
-    // console.log(this.pageWithImages);
+  // eslint-disable-next-line
+  getSavedImages(arr: any) {
+    this.savedImages = _.uniqWith(this.savedImages.concat(arr), _.isEqual);
+    console.log(this.savedImages);
   }
 }
 

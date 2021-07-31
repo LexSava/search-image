@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Main.scss';
 import { Container, Button, Card, Form, FormControl } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import _ from 'lodash';
 import Store from '../../store/Store';
 import { Api } from '../../api/flickr';
 
@@ -29,6 +30,8 @@ const Main: React.FC<IMain> = (props) => {
   const [idAllImagesPage, setIdAllImagesPage] = useState<any>([]);
   // eslint-disable-next-line
   const [cards, setCards] = useState<any>([]);
+  // eslint-disable-next-line
+  const [savedCards, setSavedСards] = useState<any>([]);
 
   useEffect(() => {
     setSearch(props.resultsSearch);
@@ -49,10 +52,35 @@ const Main: React.FC<IMain> = (props) => {
     }
   }, [search, page]);
 
+  // eslint-disable-next-line
+  const getSavedСards = (elem: any) => {
+    Store.getSavedImages(elem);
+  };
+
+  useEffect(() => {
+    setPage('1');
+  }, [search]);
+
+  const backPage = () => {
+    let back = +page;
+    if (back > 1) {
+      back -= 1;
+      setPage(String(back));
+    }
+  };
+
+  const forwardPage = () => {
+    let forward = +page;
+    if (forward < +allPages) {
+      forward += 1;
+      setPage(String(forward));
+    }
+  };
+
   useEffect(() => {
     setCards(
       idAllImagesPage.map((img: IBodyImg) => {
-        console.log(img);
+        // console.log(img);
 
         const srcPath = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`;
         return (
@@ -62,6 +90,7 @@ const Main: React.FC<IMain> = (props) => {
               <Form inline className="w-100 ">
                 <Button
                   variant="dark"
+                  onClick={() => getSavedСards(srcPath)}
                   // onClick={() => Store.getCounter()}
                 >
                   Bookmark it!
@@ -82,26 +111,6 @@ const Main: React.FC<IMain> = (props) => {
       })
     );
   }, [idAllImagesPage]);
-
-  // useEffect(() => {
-  //   console.log(cards);
-  // }, [cards]);
-
-  const backPage = () => {
-    let back = +page;
-    if (back > 1) {
-      back -= 1;
-      setPage(String(back));
-    }
-  };
-
-  const forwardPage = () => {
-    let forward = +page;
-    if (forward < +allPages) {
-      forward += 1;
-      setPage(String(forward));
-    }
-  };
 
   if (search.length != 0 && idAllImagesPage.length != 0) {
     return (
