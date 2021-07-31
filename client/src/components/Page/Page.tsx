@@ -9,23 +9,28 @@ import Footer from '../Footer/Footer';
 
 function Page() {
   const [search, setSearch] = useState<string>('');
+  const [menuSelector, setMenuSelector] = useState<string>('search');
 
   useEffect(() => {
-    console.log(search);
-  }, [search]);
+    console.log(menuSelector);
+  }, [menuSelector]);
 
   const processSearch = (text: string) => {
     setSearch(text);
+  };
+
+  const switchPage = (page: string) => {
+    setMenuSelector(page);
   };
 
   return (
     <Container className="page bg-light p-0">
       <Header />
       <Container className="main-content p-0 d-flex">
-        <Menu />
+        <Menu onSwitchPage={switchPage} />
         <Container className="p-0">
           <Seacrh onSearch={processSearch} />
-          <Main resultsSearch={search} />
+          <Main resultsSearch={search} section={menuSelector} />
         </Container>
       </Container>
 

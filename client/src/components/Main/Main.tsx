@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Main.scss';
 import { Container, Button, Card, Form, FormControl } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import _ from 'lodash';
 import Store from '../../store/Store';
 import { Api } from '../../api/flickr';
 
@@ -17,17 +16,29 @@ interface IBodyImg {
   server: string;
   title: string;
 }
+interface IImgSrc {
+  farm: number;
+  id: string;
+  isfamily: number;
+  isfriend: number;
+  ispublic: number;
+  owner: string;
+  secret: string;
+  server: string;
+  title: string;
+}
 
 interface IMain {
   resultsSearch: string;
+  section: string;
 }
 
 const Main: React.FC<IMain> = (props) => {
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<string>('1');
   const [allPages, setAllPages] = useState<string>('1');
-  // eslint-disable-next-line
-  const [idAllImagesPage, setIdAllImagesPage] = useState<any>([]);
+
+  const [idAllImagesPage, setIdAllImagesPage] = useState<Array<IBodyImg>>([]);
   // eslint-disable-next-line
   const [cards, setCards] = useState<any>([]);
   // eslint-disable-next-line
@@ -40,10 +51,6 @@ const Main: React.FC<IMain> = (props) => {
   useEffect(() => {
     if (search.length != 0) {
       const getOnePageImages = Api.getImages(search, page);
-      // console.log(getOnePageImages);
-
-      // Store.getImages(getOnePageImages.then((response) => response.data));
-
       getOnePageImages.then((response) => {
         setAllPages(response.pages);
 
@@ -52,8 +59,7 @@ const Main: React.FC<IMain> = (props) => {
     }
   }, [search, page]);
 
-  // eslint-disable-next-line
-  const getSavedСards = (elem: any) => {
+  const getSavedСards = (elem: IImgSrc) => {
     Store.getSavedImages(elem);
   };
 
@@ -88,11 +94,7 @@ const Main: React.FC<IMain> = (props) => {
             <Card.Img variant="top" src={srcPath} className="card-img img" />
             <Card.Body>
               <Form inline className="w-100 ">
-                <Button
-                  variant="dark"
-                  onClick={() => getSavedСards(srcPath)}
-                  // onClick={() => Store.getCounter()}
-                >
+                <Button variant="dark" onClick={() => getSavedСards(img)}>
                   Bookmark it!
                 </Button>
                 <FormControl
