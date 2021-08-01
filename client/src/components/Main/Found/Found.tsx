@@ -20,8 +20,6 @@ const Found: React.FC<IFound> = (props) => {
   // eslint-disable-next-line
   const [cards, setCards] = useState<any>([]);
 
-  const [double, setDouble] = useState<boolean>(false);
-
   const [savedImg, setSavedImg] = useState<Array<IBodyImg>>([]);
 
   useEffect(() => {
@@ -164,13 +162,13 @@ const Found: React.FC<IFound> = (props) => {
   }
   if (search.length === 0) {
     return (
-      <Container className="p-0 ps-3 h5">
+      <Container className="p-0 ps-3 h5 mt-4">
         No images here. Try to find anything else?
       </Container>
     );
   }
   return (
-    <Container className="p-0 ps-3 h5">
+    <Container className="p-0 ps-3 h5 mt-4">
       No images here. Whould you try to search for anything else?
     </Container>
   );

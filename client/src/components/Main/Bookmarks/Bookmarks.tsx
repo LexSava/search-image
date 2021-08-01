@@ -25,10 +25,6 @@ const Bookmarks: React.FC<IFound> = (props) => {
     setSavedСards(Store.savedImages);
   }, [Store.savedImages, deletCard]);
 
-  // useEffect(() => {
-  //   console.log(savedCards);
-  // }, [savedCards]);
-
   useEffect(() => {
     setCards(
       savedCards.map((img: IBodyImg) => {
