@@ -8,7 +8,7 @@ interface IMenu {
 }
 
 const Menu: React.FC<IMenu> = (props) => {
-  const [section, setSection] = useState<string>('search');
+  const [section, setSection] = useState<string>('found');
 
   const switchSection = (toggle: string) => {
     setSection(toggle);
@@ -27,7 +27,7 @@ const Menu: React.FC<IMenu> = (props) => {
       <Nav.Link eventKey="link-1" className="mt-3 link-dark">
         <BsCloud
           className="linck-icon"
-          onClick={() => switchSection('search')}
+          onClick={() => switchSection('found')}
         />
       </Nav.Link>
       <Nav.Link eventKey="link-2" className="mt-3 link-dark">

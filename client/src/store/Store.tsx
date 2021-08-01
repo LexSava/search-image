@@ -40,6 +40,12 @@ class Store {
     this.savedImages = _.uniqWith(this.savedImages.concat(arr), _.isEqual);
     console.log(this.savedImages);
   }
+
+  removedSavedImages(id: string) {
+    // eslint-disable-next-line
+    this.savedImages = _.remove(this.savedImages, (item) => item.id != id);
+    console.log(this.savedImages);
+  }
 }
 
 export default new Store();

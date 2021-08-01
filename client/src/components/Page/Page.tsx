@@ -9,7 +9,7 @@ import Footer from '../Footer/Footer';
 
 function Page() {
   const [search, setSearch] = useState<string>('');
-  const [menuSelector, setMenuSelector] = useState<string>('search');
+  const [menuSelector, setMenuSelector] = useState<string>('found');
 
   useEffect(() => {
     console.log(menuSelector);
@@ -33,7 +33,6 @@ function Page() {
           <Main resultsSearch={search} section={menuSelector} />
         </Container>
       </Container>
-
       <Footer />
     </Container>
   );
