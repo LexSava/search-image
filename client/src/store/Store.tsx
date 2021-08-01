@@ -1,5 +1,6 @@
 import { makeAutoObservable, autorun, set, toJS } from 'mobx';
 import _ from 'lodash';
+import { IBodyImg } from '../common/interfaces';
 
 // eslint-disable-next-line
 export function autoSave(_this: any, name: string) {
@@ -19,14 +20,14 @@ class Store {
   // page: string = '1';
 
   // pageWithImages: object = {};
-  // eslint-disable-next-line
-  savedImages: any = [];
+
+  savedImages: Array<IBodyImg> = [];
 
   public accessToken: string;
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
-    this.accessToken = ''; // initial value setup must be placed here before update by autoSave
+    this.accessToken = '';
     autoSave(this, 'authStore');
   }
 
@@ -35,8 +36,7 @@ class Store {
     // console.log(this.search);
   }
 
-  // eslint-disable-next-line
-  getSavedImages(arr: any) {
+  getSavedImages(arr: IBodyImg) {
     this.savedImages = _.uniqWith(this.savedImages.concat(arr), _.isEqual);
     console.log(this.savedImages);
   }

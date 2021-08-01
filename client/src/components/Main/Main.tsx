@@ -4,29 +4,7 @@ import { Container, Button, Card, Form, FormControl } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import Store from '../../store/Store';
 import { Api } from '../../api/flickr';
-
-interface IBodyImg {
-  farm: number;
-  id: string;
-  isfamily: number;
-  isfriend: number;
-  ispublic: number;
-  owner: string;
-  secret: string;
-  server: string;
-  title: string;
-}
-interface IImgSrc {
-  farm: number;
-  id: string;
-  isfamily: number;
-  isfriend: number;
-  ispublic: number;
-  owner: string;
-  secret: string;
-  server: string;
-  title: string;
-}
+import { IBodyImg, IImgSrc } from '../../common/interfaces';
 
 interface IMain {
   resultsSearch: string;
