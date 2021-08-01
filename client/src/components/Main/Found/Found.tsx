@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Found.scss';
 import { Container, Button, Card, Form, FormControl } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import _ from 'lodash';
 import Store from '../../../store/Store';
 import { Api } from '../../../api/flickr';
 import { IBodyImg, IImgSrc } from '../../../common/interfaces';
@@ -15,16 +16,25 @@ const Found: React.FC<IFound> = (props) => {
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<string>('1');
   const [allPages, setAllPages] = useState<string>('1');
-
-  const [idAllImagesPage, setIdAllImagesPage] = useState<Array<IBodyImg>>([]);
+  const [allImagesPage, setAllImagesPage] = useState<Array<IBodyImg>>([]);
   // eslint-disable-next-line
   const [cards, setCards] = useState<any>([]);
-  // eslint-disable-next-line
-  const [savedCards, setSavedСards] = useState<any>([]);
+
+  const [double, setDouble] = useState<boolean>(false);
+
+  const [savedImg, setSavedImg] = useState<Array<IBodyImg>>([]);
 
   useEffect(() => {
     setSearch(props.resultsSearch);
   }, [props.resultsSearch]);
+
+  useEffect(() => {
+    console.log(savedImg);
+  }, [savedImg]);
+
+  useEffect(() => {
+    setSavedImg(Store.savedImages);
+  }, []);
 
   useEffect(() => {
     if (search.length != 0) {
@@ -32,13 +42,15 @@ const Found: React.FC<IFound> = (props) => {
       getOnePageImages.then((response) => {
         setAllPages(response.pages);
 
-        setIdAllImagesPage(response.photo.map((item: IBodyImg) => item));
+        setAllImagesPage(response.photo.map((item: IBodyImg) => item));
+        Store.getpageWithImages(response.photo.map((item: IBodyImg) => item));
       });
     }
   }, [search, page]);
 
   const getSavedСards = (elem: IImgSrc) => {
     Store.getSavedImages(elem);
+    setSavedImg(Store.savedImages);
   };
 
   useEffect(() => {
@@ -63,36 +75,63 @@ const Found: React.FC<IFound> = (props) => {
 
   useEffect(() => {
     setCards(
-      idAllImagesPage.map((img: IBodyImg) => {
-        // console.log(img);
-
+      Store.pageWithImages.map((img: IBodyImg) => {
         const srcPath = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`;
+        let stateButton: boolean = false;
+        const disableButtons = (imgage: IBodyImg) => {
+          const disable = savedImg.some((i: IBodyImg) => i.id === imgage.id);
+          stateButton = disable;
+        };
+        disableButtons(img);
         return (
           <Card style={{ width: '18rem' }} key={img.id} className="mb-4">
             <Card.Img variant="top" src={srcPath} className="card-img img" />
             <Card.Body>
-              <Form inline className="w-100 ">
-                <Button variant="dark" onClick={() => getSavedСards(img)}>
-                  Bookmark it!
-                </Button>
-                <FormControl
-                  type="text"
-                  placeholder="Some tags?"
-                  className="mt-3"
-                  // value={inputText}
-                  // onChange={changeHandle}
-                  // onInput={changeHandle}
-                  // onKeyPress={keyPressHandler}
-                />
-              </Form>
+              {stateButton ? (
+                <Form inline className="w-100 ">
+                  <Button variant="warning" disabled>
+                    Image saved
+                  </Button>
+                  <FormControl
+                    type="text"
+                    placeholder="Some tags?"
+                    className="mt-3"
+                    disabled
+                    // value={inputText}
+                    // onChange={changeHandle}
+                    // onInput={changeHandle}
+                    // onKeyPress={keyPressHandler}
+                  />
+                </Form>
+              ) : (
+                <Form inline className="w-100 ">
+                  <Button
+                    variant="dark"
+                    onClick={() => {
+                      getSavedСards(img);
+                    }}
+                  >
+                    Bookmark it!
+                  </Button>
+                  <FormControl
+                    type="text"
+                    placeholder="Some tags?"
+                    className="mt-3"
+                    // value={inputText}
+                    // onChange={changeHandle}
+                    // onInput={changeHandle}
+                    // onKeyPress={keyPressHandler}
+                  />
+                </Form>
+              )}
             </Card.Body>
           </Card>
         );
       })
     );
-  }, [idAllImagesPage]);
+  }, [allImagesPage, savedImg]);
 
-  if (search.length != 0 && idAllImagesPage.length != 0) {
+  if (search.length != 0 && allImagesPage.length != 0) {
     return (
       <Container className="p-0 ps-3">
         <Container className="p-0 d-flex justify-content-end pe-3">

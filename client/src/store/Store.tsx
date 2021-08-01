@@ -17,9 +17,9 @@ export function autoSave(_this: any, name: string) {
 class Store {
   search: string = '';
 
-  // page: string = '1';
+  page: string = '1';
 
-  // pageWithImages: object = {};
+  pageWithImages: Array<IBodyImg> = [];
 
   savedImages: Array<IBodyImg> = [];
 
@@ -33,18 +33,20 @@ class Store {
 
   getSearchQuery(enteredSearch: string) {
     this.search = enteredSearch;
-    // console.log(this.search);
+  }
+
+  getpageWithImages(arr: Array<IBodyImg>) {
+    this.pageWithImages = arr;
   }
 
   getSavedImages(arr: IBodyImg) {
     this.savedImages = _.uniqWith(this.savedImages.concat(arr), _.isEqual);
-    console.log(this.savedImages);
+    // console.log(this.savedImages);
   }
 
   removedSavedImages(id: string) {
-    // eslint-disable-next-line
     this.savedImages = _.remove(this.savedImages, (item) => item.id != id);
-    console.log(this.savedImages);
+    // console.log(this.savedImages);
   }
 }
 

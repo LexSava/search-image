@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Header.scss';
 import React from 'react';
-import { Container } from 'react-bootstrap';
 import { BsPersonBoundingBox } from 'react-icons/bs';
 
 function Header() {

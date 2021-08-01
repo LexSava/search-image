@@ -22,14 +22,27 @@ function Page() {
   const switchPage = (page: string) => {
     setMenuSelector(page);
   };
-
+  if (menuSelector === 'found') {
+    return (
+      <Container className="page bg-light p-0">
+        <Header />
+        <Container className="main-content p-0 d-flex">
+          <Menu onSwitchPage={switchPage} />
+          <Container className="p-0">
+            <Seacrh onSearch={processSearch} />
+            <Main resultsSearch={search} section={menuSelector} />
+          </Container>
+        </Container>
+        <Footer />
+      </Container>
+    );
+  }
   return (
     <Container className="page bg-light p-0">
       <Header />
       <Container className="main-content p-0 d-flex">
         <Menu onSwitchPage={switchPage} />
         <Container className="p-0">
-          <Seacrh onSearch={processSearch} />
           <Main resultsSearch={search} section={menuSelector} />
         </Container>
       </Container>

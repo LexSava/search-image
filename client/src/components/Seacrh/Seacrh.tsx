@@ -10,7 +10,7 @@ interface ISearch {
 }
 
 const Seacrh: React.FC<ISearch> = (props) => {
-  const [inputText, setInputText] = useState<string>('');
+  const [inputText, setInputText] = useState<string>(Store.search);
   const [startSearch, setStartSearch] = useState<string>('');
 
   const changeHandle = (event: React.ChangeEvent<HTMLInputElement>) => {

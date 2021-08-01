@@ -23,7 +23,6 @@ const Menu: React.FC<IMenu> = (props) => {
       defaultActiveKey="/home"
       className="flex-column block-example menu-block p-2"
     >
-      {/* <Nav.Link eventKey="link-1">Link</Nav.Link> */}
       <Nav.Link eventKey="link-1" className="mt-3 link-dark">
         <BsCloud
           className="linck-icon"
