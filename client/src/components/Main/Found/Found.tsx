@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Found.scss';
 import { Container, Button, Card, Form, FormControl } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import _ from 'lodash';
 import Store from '../../../store/Store';
 import { Api } from '../../../api/flickr';
 import { IBodyImg, IImgSrc } from '../../../common/interfaces';
@@ -32,7 +31,7 @@ const Found: React.FC<IFound> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (search.length != 0) {
+    if (search.length !== 0) {
       const getOnePageImages = Api.getImages(search, page);
       getOnePageImages.then((response) => {
         setAllPages(response.pages);
@@ -54,9 +53,7 @@ const Found: React.FC<IFound> = (props) => {
   };
 
   const addTagImage = (id: string, tag: string) => {
-    // const elem = { id, tag };
     Store.getTagsForImages({ id, tag });
-    console.log({ id, tag });
   };
 
   const keyPressHandler = (event: React.KeyboardEvent) => {
@@ -109,11 +106,6 @@ const Found: React.FC<IFound> = (props) => {
                     placeholder="Some tags?"
                     className="mt-3"
                     disabled
-                    // value={inputText}
-                    // onChange={changeHandle}
-                    // onInput={changeTextTagImg}
-                    // onKeyPress={keyPressHandler}
-                    // onKeyPress={keyPressHandler}
                   />
                 </Form>
               ) : (
@@ -133,13 +125,7 @@ const Found: React.FC<IFound> = (props) => {
                     placeholder="Some tags?"
                     className="mt-3"
                     onChange={enteredTag}
-                    onInput={enteredTag}
                     onKeyPress={keyPressHandler}
-                    // value={textTagImg}
-                    // value={inputText}
-                    // onChange={changeHandle}
-                    // onInput={changeHandle}
-                    // onKeyPress={keyPressHandler}
                   />
                 </Form>
               )}
@@ -150,7 +136,7 @@ const Found: React.FC<IFound> = (props) => {
     );
   }, [allImagesPage, savedImg, inputText]);
 
-  if (search.length != 0 && allImagesPage.length != 0) {
+  if (search.length !== 0 && allImagesPage.length !== 0) {
     return (
       <Container className="p-0 ps-3">
         <Container className="p-0 d-flex justify-content-end pe-3">

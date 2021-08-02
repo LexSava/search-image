@@ -5,7 +5,6 @@ import {
   Container,
   Form,
   FormControl,
-  Button,
   OverlayTrigger,
   Tooltip,
 } from 'react-bootstrap';
@@ -34,7 +33,7 @@ const Seacrh: React.FC<ISearch> = (props) => {
 
   useEffect(() => {
     props.onSearch(startSearch);
-  }, [startSearch]);
+  });
 
   // eslint-disable-next-line
   const renderTooltip = (prop: any) => (

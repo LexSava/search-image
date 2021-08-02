@@ -28,7 +28,7 @@ const Bookmarks: React.FC<IFound> = (props) => {
   useEffect(() => {
     setSavedСards(Store.savedImages);
     setSavedTagsForImages(Store.tagsForImages);
-  }, [Store.savedImages, Store.tagsForImages, deletCard]);
+  }, [deletCard]);
 
   useEffect(() => {
     setCards(
@@ -52,9 +52,9 @@ const Bookmarks: React.FC<IFound> = (props) => {
         );
       })
     );
-  }, [savedCards]);
+  });
 
-  if (savedCards.length != 0) {
+  if (savedCards.length !== 0) {
     return (
       <Container className="p-0 ps-3">
         <Container className="p-0 mt-5 d-flex flex-wrap justify-content-around">

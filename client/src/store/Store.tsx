@@ -52,12 +52,12 @@ class Store {
   }
 
   removedSavedImages(id: string) {
-    this.savedImages = _.remove(this.savedImages, (item) => item.id != id);
+    this.savedImages = _.remove(this.savedImages, (item) => item.id !== id);
     // console.log(this.savedImages);
   }
 
   removedTagsForImages(id: string) {
-    this.tagsForImages = _.remove(this.tagsForImages, (item) => item.id != id);
+    this.tagsForImages = _.remove(this.tagsForImages, (item) => item.id !== id);
     // console.log(this.savedImages);
   }
 }

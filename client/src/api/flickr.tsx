@@ -10,7 +10,7 @@ export const Api = {
       )
       .then((response) => response.data.photos)
       .catch((error) => {
-        console.log('Error fetching posts: ', error);
+        process.stdout.write('Error fetching posts: ', error);
       });
   },
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useIdleTimer } from 'react-idle-timer';
 import './Page.scss';
 import { Container } from 'react-bootstrap';
@@ -8,7 +8,9 @@ import Menu from '../Menu/Menu';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 
-function Page() {
+interface IPage {}
+
+const Page: React.FC<IPage> = (props) => {
   const [search, setSearch] = useState<string>('');
   const [menuSelector, setMenuSelector] = useState<string>('found');
 
@@ -21,14 +23,6 @@ function Page() {
     onActive: handleOnActive,
     onIdle: handleOnIdle,
   });
-
-  // useEffect(() => {
-  //   console.log(isIdle);
-  // }, [isIdle]);
-
-  // useEffect(() => {
-  //   console.log(menuSelector);
-  // }, [menuSelector]);
 
   const processSearch = (text: string) => {
     setSearch(text);
@@ -64,6 +58,6 @@ function Page() {
       <Footer />
     </Container>
   );
-}
+};
 
 export default Page;

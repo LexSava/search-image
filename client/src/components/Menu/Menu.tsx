@@ -16,7 +16,7 @@ const Menu: React.FC<IMenu> = (props) => {
 
   useEffect(() => {
     props.onSwitchPage(section);
-  }, [section]);
+  });
 
   return (
     <Nav
