@@ -1,6 +1,6 @@
 import { makeAutoObservable, autorun, set, toJS } from 'mobx';
 import _ from 'lodash';
-import { IBodyImg } from '../common/interfaces';
+import { IBodyImg, ITagsForImages } from '../common/interfaces';
 
 // eslint-disable-next-line
 export function autoSave(_this: any, name: string) {
@@ -23,6 +23,8 @@ class Store {
 
   savedImages: Array<IBodyImg> = [];
 
+  tagsForImages: Array<ITagsForImages> = [];
+
   public accessToken: string;
 
   constructor() {
@@ -44,8 +46,18 @@ class Store {
     // console.log(this.savedImages);
   }
 
+  getTagsForImages(elem: ITagsForImages) {
+    this.tagsForImages = _.uniqWith(this.tagsForImages.concat(elem), _.isEqual);
+    // console.log(this.tagsForImages);
+  }
+
   removedSavedImages(id: string) {
     this.savedImages = _.remove(this.savedImages, (item) => item.id != id);
+    // console.log(this.savedImages);
+  }
+
+  removedTagsForImages(id: string) {
+    this.tagsForImages = _.remove(this.tagsForImages, (item) => item.id != id);
     // console.log(this.savedImages);
   }
 }

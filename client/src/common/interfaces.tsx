@@ -20,3 +20,7 @@ export interface IImgSrc {
   server: string;
   title: string;
 }
+export interface ITagsForImages {
+  id: string;
+  tag: string;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useIdleTimer } from 'react-idle-timer';
 import './Page.scss';
 import { Container } from 'react-bootstrap';
 import Header from '../Header/Header';
@@ -11,9 +12,23 @@ function Page() {
   const [search, setSearch] = useState<string>('');
   const [menuSelector, setMenuSelector] = useState<string>('found');
 
-  useEffect(() => {
-    console.log(menuSelector);
-  }, [menuSelector]);
+  const timeout = 1000 * 10;
+  const [isIdle, setIsIdle] = useState(false);
+  const handleOnActive = () => setIsIdle(false);
+  const handleOnIdle = () => setIsIdle(true);
+  useIdleTimer({
+    timeout,
+    onActive: handleOnActive,
+    onIdle: handleOnIdle,
+  });
+
+  // useEffect(() => {
+  //   console.log(isIdle);
+  // }, [isIdle]);
+
+  // useEffect(() => {
+  //   console.log(menuSelector);
+  // }, [menuSelector]);
 
   const processSearch = (text: string) => {
     setSearch(text);
@@ -25,7 +40,7 @@ function Page() {
   if (menuSelector === 'found') {
     return (
       <Container className="page bg-light p-0">
-        <Header />
+        <Header onIndicator={isIdle} />
         <Container className="main-content p-0 d-flex">
           <Menu onSwitchPage={switchPage} />
           <Container className="p-0">
@@ -39,7 +54,7 @@ function Page() {
   }
   return (
     <Container className="page bg-light p-0">
-      <Header />
+      <Header onIndicator={isIdle} />
       <Container className="main-content p-0 d-flex">
         <Menu onSwitchPage={switchPage} />
         <Container className="p-0">

@@ -16,6 +16,7 @@ const Found: React.FC<IFound> = (props) => {
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<string>('1');
   const [allPages, setAllPages] = useState<string>('1');
+  const [inputText, setInputText] = useState<string>('');
   const [allImagesPage, setAllImagesPage] = useState<Array<IBodyImg>>([]);
   // eslint-disable-next-line
   const [cards, setCards] = useState<any>([]);
@@ -25,10 +26,6 @@ const Found: React.FC<IFound> = (props) => {
   useEffect(() => {
     setSearch(props.resultsSearch);
   }, [props.resultsSearch]);
-
-  useEffect(() => {
-    console.log(savedImg);
-  }, [savedImg]);
 
   useEffect(() => {
     setSavedImg(Store.savedImages);
@@ -46,9 +43,26 @@ const Found: React.FC<IFound> = (props) => {
     }
   }, [search, page]);
 
+  const enteredTag = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setInputText(event.target.value);
+  };
+
   const getSavedСards = (elem: IImgSrc) => {
     Store.getSavedImages(elem);
     setSavedImg(Store.savedImages);
+  };
+
+  const addTagImage = (id: string, tag: string) => {
+    // const elem = { id, tag };
+    Store.getTagsForImages({ id, tag });
+    console.log({ id, tag });
+  };
+
+  const keyPressHandler = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
   };
 
   useEffect(() => {
@@ -97,7 +111,8 @@ const Found: React.FC<IFound> = (props) => {
                     disabled
                     // value={inputText}
                     // onChange={changeHandle}
-                    // onInput={changeHandle}
+                    // onInput={changeTextTagImg}
+                    // onKeyPress={keyPressHandler}
                     // onKeyPress={keyPressHandler}
                   />
                 </Form>
@@ -107,14 +122,20 @@ const Found: React.FC<IFound> = (props) => {
                     variant="dark"
                     onClick={() => {
                       getSavedСards(img);
+                      addTagImage(img.id, inputText);
                     }}
                   >
                     Bookmark it!
                   </Button>
                   <FormControl
                     type="text"
+                    defaultValue=""
                     placeholder="Some tags?"
                     className="mt-3"
+                    onChange={enteredTag}
+                    onInput={enteredTag}
+                    onKeyPress={keyPressHandler}
+                    // value={textTagImg}
                     // value={inputText}
                     // onChange={changeHandle}
                     // onInput={changeHandle}
@@ -127,7 +148,7 @@ const Found: React.FC<IFound> = (props) => {
         );
       })
     );
-  }, [allImagesPage, savedImg]);
+  }, [allImagesPage, savedImg, inputText]);
 
   if (search.length != 0 && allImagesPage.length != 0) {
     return (

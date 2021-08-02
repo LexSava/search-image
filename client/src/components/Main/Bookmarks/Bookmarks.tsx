@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Bookmarks.scss';
 import { Container, Button, Card, Form } from 'react-bootstrap';
 import Store from '../../../store/Store';
-import { IBodyImg } from '../../../common/interfaces';
+import { IBodyImg, ITagsForImages } from '../../../common/interfaces';
 
 interface IFound {
   resultsSearch: string;
@@ -14,25 +14,34 @@ const Bookmarks: React.FC<IFound> = (props) => {
   const [cards, setCards] = useState<any>([]);
 
   const [savedCards, setSavedСards] = useState<Array<IBodyImg>>([]);
+  const [savedTagsForImages, setSavedTagsForImages] = useState<
+    Array<ITagsForImages>
+  >([]);
   const [deletCard, setDeletCard] = useState<string>('');
 
   const removeSavedСards = (id: string) => {
     setDeletCard(id);
     Store.removedSavedImages(id);
+    Store.removedTagsForImages(id);
   };
 
   useEffect(() => {
     setSavedСards(Store.savedImages);
-  }, [Store.savedImages, deletCard]);
+    setSavedTagsForImages(Store.tagsForImages);
+  }, [Store.savedImages, Store.tagsForImages, deletCard]);
 
   useEffect(() => {
     setCards(
       savedCards.map((img: IBodyImg) => {
+        const getTag = savedTagsForImages.find((item) => item.id === img.id);
+        let tagImg = '___';
+        if (getTag !== undefined) tagImg = getTag.tag;
         const srcPath = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`;
         return (
           <Card style={{ width: '18rem' }} key={img.id} className="mb-4">
             <Card.Img variant="top" src={srcPath} className="card-img img" />
             <Card.Body>
+              <Card.Title>Card tag: {tagImg} </Card.Title>
               <Form inline className="w-100 ">
                 <Button variant="dark" onClick={() => removeSavedСards(img.id)}>
                   Remove it!
