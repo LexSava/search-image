@@ -14,7 +14,7 @@ const Page: React.FC<IPage> = (props) => {
   const [search, setSearch] = useState<string>('');
   const [menuSelector, setMenuSelector] = useState<string>('found');
 
-  const timeout = 1000 * 10;
+  const timeout = 1000 * 60;
   const [isIdle, setIsIdle] = useState(false);
   const handleOnActive = () => setIsIdle(false);
   const handleOnIdle = () => setIsIdle(true);
