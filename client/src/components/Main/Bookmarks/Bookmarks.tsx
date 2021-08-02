@@ -52,7 +52,7 @@ const Bookmarks: React.FC<IFound> = (props) => {
         );
       })
     );
-  });
+  }, [savedCards]);
 
   if (savedCards.length !== 0) {
     return (
