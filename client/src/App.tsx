@@ -14,7 +14,7 @@ const LoadableComponent = Loadable({
 interface IApp {}
 
 const App: React.FC<IApp> = () => (
-  <BrowserRouter>
+  <BrowserRouter basename="/React">
     <Switch>
       <Route path="/" exact component={LoadableComponent} />
     </Switch>

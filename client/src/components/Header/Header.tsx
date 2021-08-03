@@ -2,12 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Header.scss';
 import React, { useState, useEffect } from 'react';
 import Badge from '@material-ui/core/Badge';
-import {
-  Theme,
-  makeStyles,
-  withStyles,
-  createStyles,
-} from '@material-ui/core/styles';
+import { Theme, withStyles, createStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Ava from '../../assets/avatar/avatar.jpg';
 
@@ -22,7 +17,6 @@ const Header: React.FC<IHeader> = (props) => {
 
   useEffect(() => {
     setIndicatorValue(props.onIndicator);
-    console.log(props.onIndicator);
   }, [props.onIndicator]);
 
   const StyledBadgeInactive = withStyles((theme: Theme) =>

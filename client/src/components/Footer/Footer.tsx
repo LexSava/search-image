@@ -6,7 +6,7 @@ interface IFooter {}
 
 const Footer: React.FC<IFooter> = (props) => (
   <footer className="w-100 p-3 background-header text-dark d-flex justify-content-between">
-    <div className="ms-4 h4 d-flex align-items-md-center color-header">
+    <div className="ms-4 h6 d-flex align-items-md-center color-header">
       <a
         href="https://github.com/LexSava"
         target="_blank"
