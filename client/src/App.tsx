@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
@@ -14,10 +14,8 @@ const LoadableComponent = Loadable({
 interface IApp {}
 
 const App: React.FC<IApp> = () => (
-  <BrowserRouter basename="/React">
-    <Switch>
-      <Route path="/" exact component={LoadableComponent} />
-    </Switch>
-  </BrowserRouter>
+  <HashRouter>
+    <Route path="/" exact component={LoadableComponent} />
+  </HashRouter>
 );
 export default App;
